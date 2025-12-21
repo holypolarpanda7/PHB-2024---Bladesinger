@@ -6,22 +6,22 @@ on:
       - "v*.*.*"   # e.g. v1.2.3
 
 permissions:
-  contents: write  # needed for GitHub Releases
+  contents: write
 
 env:
-  # === Your mod identity ===
-  MOD_NAME: "PHB 2024 - Bladesinger" # used for naming output files
+  # === Display name (human-readable) ===
+  MOD_NAME: "PHB 2024 - Bladesinger"
+
+  # === Safe slug for filenames ===
+  MOD_SLUG: "PHB_2024_Bladesinger"
+
   GAME: "bg3"
 
   # === LSLib / Divine CLI pin ===
-  # Prefer pinning a known-good version.
-  # Update this when you want to bump tooling.
-  LSLIB_VERSION: "1.19.5"  # <-- Using older stable version for correct BG3 package format
+  LSLIB_VERSION: "1.19.5"
 
-  # === Where your mod sources live in the repo ===
-  # This is the folder Divine will package.
-  # Typically you want something that includes Mods/<ModName> and/or Public/<ModName>.
-  MOD_SOURCE_DIR: "."  # <-- change to your source folder (see notes below)
+  # === Repo root is the mod source ===
+  MOD_SOURCE_DIR: "."
 
 jobs:
   build:
@@ -43,13 +43,14 @@ jobs:
         id: meta
         shell: pwsh
         run: |
-          # refs/tags/v1.2.3 -> v1.2.3
           $tag = "${{ github.ref_name }}"
-          if (-not $tag.StartsWith("v")) { throw "Tag must start with v (e.g. v1.2.3). Got: $tag" }
-          $version = $tag.Substring(1)
+          if (-not $tag.StartsWith("v")) {
+            throw "Tag must start with v (e.g. v1.2.3). Got: $tag"
+          }
 
-          $zipName = "${env:MOD_NAME}_v$version.zip"
-          $artifactName = "dist-${env:MOD_NAME}-v$version"
+          $version = $tag.Substring(1)
+          $zipName = "${env:MOD_SLUG}_v$version.zip"
+          $artifactName = "dist-${env:MOD_SLUG}-v$version"
 
           "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           "zip_name=$zipName" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
@@ -60,38 +61,33 @@ jobs:
         with:
           dotnet-version: "8.0.x"
 
-      - name: Download LSLib/Divine CLI (pinned)
+      - name: Download LSLib / Divine CLI (pinned)
         id: lslib
         shell: pwsh
         run: |
           $v = "${env:LSLIB_VERSION}"
           $url = "https://github.com/Norbyte/lslib/releases/download/v$v/ExportTool-v$v.zip"
-          $out = "ExportTool.zip"
 
-          Write-Host "Downloading LSLib/Divine from $url"
-          Invoke-WebRequest -Uri $url -OutFile $out
+          Write-Host "Downloading LSLib from $url"
+          Invoke-WebRequest -Uri $url -OutFile "ExportTool.zip"
+          Expand-Archive -Path "ExportTool.zip" -DestinationPath "lslib" -Force
 
-          Expand-Archive -Path $out -DestinationPath "lslib" -Force
-
-          # Find Divine.exe in the extracted folder
           $divine = Get-ChildItem -Path "lslib" -Recurse -Filter "Divine.exe" | Select-Object -First 1
           if (-not $divine) {
             Write-Host "LSLib folder structure:"
             Get-ChildItem -Path "lslib" -Recurse | Select-Object FullName
-            throw "Divine.exe not found in lslib folder. See structure above."
+            throw "Divine.exe not found."
           }
 
-          $divinePath = $divine.FullName
-          "divine_path=$divinePath" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-          Write-Host "Divine path: $divinePath"
+          "divine_path=$($divine.FullName)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "Using Divine at $($divine.FullName)"
 
-      - name: Sanity check mod source folder exists
+      - name: Sanity check repo root
         shell: pwsh
         run: |
-          $src = "${env:MOD_SOURCE_DIR}"
-          if (-not (Test-Path $src)) { throw "MOD_SOURCE_DIR not found: $src" }
-          Write-Host "MOD_SOURCE_DIR contents:"
-          Get-ChildItem -Path $src -Recurse -Depth 3 | Select-Object FullName
+          $src = (Resolve-Path "${env:MOD_SOURCE_DIR}").Path
+          Write-Host "MOD_SOURCE_DIR: $src"
+          Get-ChildItem -Path $src -Recurse | Select-Object -First 200 -ExpandProperty FullName
 
       - name: Create .pak with Divine
         shell: pwsh
@@ -100,73 +96,61 @@ jobs:
           $src = (Resolve-Path "${env:MOD_SOURCE_DIR}").Path
 
           New-Item -ItemType Directory -Force -Path "dist" | Out-Null
+          $pak = Join-Path (Resolve-Path "dist").Path "${env:MOD_SLUG}.pak"
 
-          # Output pak path
-          $pak = Join-Path (Resolve-Path "dist").Path "${env:MOD_NAME}.pak"
-
-          # IMPORTANT:
-          # Divine "create-package" generally accepts:
-          # -g bg3
-          # -s <source folder>
-          # -d <destination pak path>
-          # -g <game> specifies the target game format
-          #
           & $divine -g ${env:GAME} -a create-package -s $src -d $pak
 
-          if (-not (Test-Path $pak)) { throw ".pak was not created: $pak" }
+          if (-not (Test-Path $pak)) {
+            throw ".pak was not created: $pak"
+          }
 
-          Write-Host "Created pak: $pak"
+          Write-Host "Created pak:"
           Get-Item $pak | Format-List *
 
       - name: List package contents (sanity)
         shell: pwsh
         run: |
           $divine = "${{ steps.lslib.outputs.divine_path }}"
-          $pak = (Resolve-Path "dist\${env:MOD_NAME}.pak").Path
+          $pak = (Resolve-Path "dist\${env:MOD_SLUG}.pak").Path
           & $divine -g ${env:GAME} -a list-package -s $pak
 
       - name: Build distributable zip
         shell: pwsh
         run: |
-          $version = "${{ steps.meta.outputs.version }}"
           $zipName = "${{ steps.meta.outputs.zip_name }}"
 
-          # Create a clean staging folder so the zip layout is predictable
           $stage = "stage"
           if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
           New-Item -ItemType Directory -Force -Path $stage | Out-Null
 
-          Copy-Item "dist\${env:MOD_NAME}.pak" "$stage\${env:MOD_NAME}.pak"
+          Copy-Item "dist\${env:MOD_SLUG}.pak" "$stage\${env:MOD_SLUG}.pak"
 
-          # Optional docs
           if (Test-Path "README.md") { Copy-Item "README.md" "$stage\README.md" }
           if (Test-Path "CHANGELOG.md") { Copy-Item "CHANGELOG.md" "$stage\CHANGELOG.md" }
           if (Test-Path "LICENSE") { Copy-Item "LICENSE" "$stage\LICENSE" }
 
-          # Zip to dist/
           $zipPath = Join-Path (Resolve-Path "dist").Path $zipName
           if (Test-Path $zipPath) { Remove-Item -Force $zipPath }
 
           Compress-Archive -Path "$stage\*" -DestinationPath $zipPath -CompressionLevel Optimal
 
-          Write-Host "Created zip: $zipPath"
+          Write-Host "Created zip:"
           Get-Item $zipPath | Format-List *
 
       - name: Generate checksums
         shell: pwsh
         run: |
           $zip = (Resolve-Path "dist\${{ steps.meta.outputs.zip_name }}").Path
-
           $sha256 = (Get-FileHash -Algorithm SHA256 $zip).Hash.ToLower()
           $md5 = (Get-FileHash -Algorithm MD5 $zip).Hash.ToLower()
 
-          "SHA256  $sha256" | Out-File -FilePath "dist\checksums.txt" -Encoding ascii
-          "MD5     $md5"    | Out-File -FilePath "dist\checksums.txt" -Encoding ascii -Append
+          "SHA256  $sha256" | Out-File "dist\checksums.txt" -Encoding ascii
+          "MD5     $md5"    | Out-File "dist\checksums.txt" -Encoding ascii -Append
 
           Write-Host "SHA256: $sha256"
           Write-Host "MD5:    $md5"
 
-      - name: Upload build artifact (for publish job)
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.meta.outputs.artifact_name }}
@@ -175,7 +159,8 @@ jobs:
             dist/checksums.txt
 
   release:
-    name: Create GitHub Release + (WIP)publish to Nexus/mod.io
+    if: startsWith(github.ref, 'refs/tags/v')
+    name: Create GitHub Release + (WIP) publish
     needs: build
     runs-on: ubuntu-latest
 
@@ -186,7 +171,7 @@ jobs:
           name: ${{ needs.build.outputs.artifact_name }}
           path: dist
 
-      - name: Create GitHub Release (attach assets)
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
@@ -203,32 +188,28 @@ jobs:
             dist/checksums.txt
 
       # ----------------------------
-      # mod.io publish (recommended first — usually easiest)
+      # mod.io publish (WIP)
       # ----------------------------
-      #- name: Upload to mod.io
-      #  if: ${{ secrets.MODIO_TOKEN != '' }}
-      #  uses: nickelc/upload-to-modio@v2
-      #  with:
-      #    token: ${{ secrets.MODIO_TOKEN }}
-      #    game: ${{ secrets.MODIO_GAME_ID }}     # store as secret or replace with literal
-      #    mod: ${{ secrets.MODIO_MOD_ID }}       # store as secret or replace with literal
-      #    path: dist/${{ needs.build.outputs.zip_name }}
-      #    version: ${{ github.ref_name }}
-      #    changelog: "Automated release ${{ github.ref_name }}"
-          # Optional but nice: provide MD5 if your action supports it.
-          # filehash: "<md5>"  # depends on action inputs; check action docs.
+      # - name: Upload to mod.io
+      #   uses: nickelc/upload-to-modio@v2
+      #   with:
+      #     token: ${{ secrets.MODIO_TOKEN }}
+      #     game: ${{ secrets.MODIO_GAME_ID }}
+      #     mod: ${{ secrets.MODIO_MOD_ID }}
+      #     path: dist/${{ needs.build.outputs.zip_name }}
+      #     version: ${{ github.ref_name }}
+      #     changelog: "Automated release ${{ github.ref_name }}"
 
       # ----------------------------
-      # Nexus publish (action choice varies)
+      # Nexus publish (WIP)
       # ----------------------------
-      #- name: Upload to Nexus Mods
-      #  if: ${{ secrets.NEXUS_API_KEY != '' }}
-      #  uses: hmlendea/nexusmods-update@v2
-      #  with:
-      #    api_key: ${{ secrets.NEXUS_API_KEY }}
-      #   game_domain: ${{ secrets.NEXUS_GAME_DOMAIN }} # e.g. "baldursgate3"
-      #   mod_id: ${{ secrets.NEXUS_MOD_ID }}           # numeric id
-      #    file_path: dist/${{ needs.build.outputs.zip_name }}
-      #    file_name: "${{ env.MOD_NAME }} ${{ github.ref_name }}"
-      #    file_version: ${{ github.ref_name }}
-      #    changelog: "Automated release ${{ github.ref_name }}"
+      # - name: Upload to Nexus Mods
+      #   uses: hmlendea/nexusmods-update@v2
+      #   with:
+      #     api_key: ${{ secrets.NEXUS_API_KEY }}
+      #     game_domain: ${{ secrets.NEXUS_GAME_DOMAIN }}
+      #     mod_id: ${{ secrets.NEXUS_MOD_ID }}
+      #     file_path: dist/${{ needs.build.outputs.zip_name }}
+      #     file_name: "${{ env.MOD_NAME }} ${{ github.ref_name }}"
+      #     file_version: ${{ github.ref_name }}
+      #     changelog: "Automated release ${{ github.ref_name }}"
