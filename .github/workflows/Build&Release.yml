@@ -16,7 +16,7 @@ env:
   # === LSLib / Divine CLI pin ===
   # Prefer pinning a known-good version.
   # Update this when you want to bump tooling.
-  LSLIB_VERSION: "1.19.5"  # <-- change to the version you want to pin
+  LSLIB_VERSION: "1.20.3"  # <-- change to the version you want to pin
 
   # === Where your mod sources live in the repo ===
   # This is the folder Divine will package.
@@ -65,8 +65,8 @@ jobs:
         shell: pwsh
         run: |
           $v = "${env:LSLIB_VERSION}"
-          $url = "https://github.com/Norbyte/lslib/releases/download/v$v/ConverterApp.zip"
-          $out = "ConverterApp.zip"
+          $url = "https://github.com/Norbyte/lslib/releases/download/v$v/ExportTool-v$v.zip"
+          $out = "ExportTool.zip"
 
           Write-Host "Downloading LSLib/Divine from $url"
           Invoke-WebRequest -Uri $url -OutFile $out
