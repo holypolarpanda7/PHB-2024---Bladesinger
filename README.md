@@ -130,15 +130,54 @@ data "OnRemoveFunctors" "IF(HasStatus('BLADESONG')):RemoveStatus(BLADESONG)"
 
 Changed movement bonus from `ActionResource(Movement,3,0)` to `ActionResource(Movement,2,0)` to match PHB 2024 rules (+10 feet instead of +15 feet).
 
-#### 5. Status UI Cleanup
-**File**: `Status_BOOST.txt`
+#### 5. Bladesong Tooltip Cleanup
+**File**: `Spell_Shout.txt`
 
-Makes marker statuses invisible to suppress overhead UI clutter:
+Clears tooltip warning fields to remove weapon restriction text from the Bladesong ability tooltip:
 ```
-data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
+data "ExtraDescription" ""
+data "ExtraDescriptionParams" ""
+data "TooltipStatusApply" ""
+data "TooltipPermanentWarnings" ""
+data "TooltipOnMiss" ""
+data "TooltipOnSave" ""
 ```
 
-Applied to: BLADESONG_IMPEDED, BLADESONG_WEAPON, BLADESONG_SHIELD, BLADESONG_ARMOR, BLADESONG_UNARMED
+#### 6. Status Visibility Suppression
+**Files**: `Status_BOOST.txt` and Localization
+
+Completely hides all weapon/armor/shield restriction status indicators that the base game applies:
+
+**Status Overrides** - Makes all MESSAGE statuses invisible:
+```
+new entry "BLADESONG_WEAPON_MESSAGE"
+type "StatusData"
+using "BLADESONG_WEAPON_MESSAGE"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
+data "Icon" ""
+data "DisplayName" ""
+data "Description" ""
+data "StatusType" "INVISIBLE"
+```
+
+Applied to: BLADESONG_IMPEDED, BLADESONG_WEAPON, BLADESONG_SHIELD, BLADESONG_ARMOR, BLADESONG_UNARMED, BLADESONG_WEAPON_MESSAGE, BLADESONG_SHIELD_MESSAGE, BLADESONG_ARMOR_MESSAGE, BLADESONG_UNARMED_MESSAGE
+
+**Localization Blanking** - Removes text from status displays by blanking localization handles for all DisplayName and Description fields.
+
+**Why This is Needed:**
+- Base game applies BLADESONG_WEAPON_MESSAGE status when wielding non-approved weapons
+- Without these overrides, "Bladesong Impeded" condition appears in character sheet and above portrait
+- Overriding to INVISIBLE status type plus blanking localization completely hides these cosmetic statuses
+
+#### 7. Martial Weapons Proficiency
+**File**: `Progressions.lsx`
+
+Ensures martial weapon proficiency is granted at level 3:
+```xml
+<attribute id="Boosts" type="LSString" value="Proficiency(MartialWeapons)"/>
+```
+
+This progression override also removes the passives that apply the "Bladesong Impeded" status indicators from the base game/PHB 2024 mod.
 
 ### Why Script Override is Required
 
@@ -197,6 +236,8 @@ The "DnD PHB 2024 All in One" mod already implements most of the Bladesinger cor
 3. **Mid-Combat Enforcement**: Bladesong now ends immediately when equipping blacklisted weapons
 4. **INT Bonus Persistence**: INT-based weapon bonuses now persist through weapon swaps
 5. **Movement Speed**: Corrected from +15 feet (+3) to **+10 feet (+2)** while Bladesinging
+6. **UI Cleanup**: Removed "Bladesong Impeded" condition indicators and cleaned up ability tooltips
+7. **Martial Weapons**: Explicitly grants martial weapon proficiency at level 3
 
 These changes ensure the subclass matches the official 2024 Player's Handbook exactly while supporting modded weapons.
 
@@ -209,7 +250,7 @@ These changes ensure the subclass matches the official 2024 Player's Handbook ex
 
 ## Known Issues
 
-- **Tooltip Warnings**: Bladesong ability tooltip still shows the old PHB 2024 weapon restriction text ("You must be wielding a Dagger, Longsword, Rapier..."). This is cosmetic only - the actual functionality correctly allows all one-handed/versatile weapons. Overriding base game (GustavX) tooltip handles causes crashes.
+None currently known. All weapon restrictions work correctly, INT bonuses persist through weapon swaps, and UI indicators are properly hidden.
 
 ## Troubleshooting
 
@@ -220,6 +261,10 @@ These changes ensure the subclass matches the official 2024 Player's Handbook ex
 ### Bladesong Doesn't Activate
 - Check that you're not wearing medium/heavy armor or a shield
 - Check that you're wielding a one-handed or versatile weapon (not greatsword, greataxe, maul, pike, etc.)
+
+### INT Bonuses Not Applying
+- Bladesong must be active for INT bonuses to apply
+- Try re-equipping your weapon if bonuses don't appear immediately
 
 ### Mod Doesn't Load
 - Verify load order: This mod MUST load after "DnD PHB 2024 All in One"
@@ -254,6 +299,14 @@ This mod is provided as-is for personal use. All D&D content belongs to Wizards 
 - Initial release
 - Switched from whitelist to blacklist weapon approach (allows modded weapons)
 - Blocks true two-handed non-versatile weapons (greatswords, greataxes, mauls, pikes)
+- Implemented equipment status monitoring for INT bonuses that persist through weapon swaps
+- Added mid-combat weapon enforcement (instant removal when equipping blacklisted weapon)
+- Corrects movement speed from +15 feet (+3) to +10 feet (+2)
+- Completely hides "Bladesong Impeded" condition indicators from UI
+- Cleaned up Bladesong ability tooltips
+- Maintains armor/shield restrictions from PHB 2024 base
+- Compatible with PHB 2024's INT-based scaling features
+- Explicitly grants martial weapon proficiency at level 3
 - Implemented equipment status monitoring for INT bonuses that persist through weapon swaps
 - Added mid-combat weapon enforcement (instant removal when equipping blacklisted weapon)
 - Corrects movement speed from +15 feet (+3) to +10 feet (+2)
