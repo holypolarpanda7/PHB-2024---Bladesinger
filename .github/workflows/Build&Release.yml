@@ -16,7 +16,7 @@ env:
   # === LSLib / Divine CLI pin ===
   # Prefer pinning a known-good version.
   # Update this when you want to bump tooling.
-  LSLIB_VERSION: "1.20.3"  # <-- change to the version you want to pin
+  LSLIB_VERSION: "1.19.5"  # <-- Using older stable version for correct BG3 package format
 
   # === Where your mod sources live in the repo ===
   # This is the folder Divine will package.
@@ -109,9 +109,9 @@ jobs:
           # -g bg3
           # -s <source folder>
           # -d <destination pak path>
-          # -p <package version> (v13 for BG3)
+          # -g <game> specifies the target game format
           #
-          & $divine -g ${env:GAME} -a create-package -s $src -d $pak -p v13
+          & $divine -g ${env:GAME} -a create-package -s $src -d $pak
 
           if (-not (Test-Path $pak)) { throw ".pak was not created: $pak" }
 
