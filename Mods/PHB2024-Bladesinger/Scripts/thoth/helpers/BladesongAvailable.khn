@@ -1,0 +1,38 @@
+function BladesongAvaliable()
+    local hasbladesong = HasStatus('BLADESONG')
+    if hasbladesong.Result then
+        return ~hasbladesong
+    end
+
+    local hasarmor = HasHeavyArmor(context.Source) | HasMediumArmor(context.Source)
+    local hasshield = HasShieldEquipped(context.Source)
+    
+    -- PHB 2024: Blacklist approach - block two-handed non-versatile melee weapons
+    local hasTwohandedMelee = WieldingWeapon('Twohanded', false, false, context.Source) & WieldingWeapon('Melee', false, false, context.Source)
+    local hasVersatile = WieldingWeapon('Versatile', false, false, context.Source)
+    local invalidWeapon = hasTwohandedMelee & ~hasVersatile
+
+    local count = 0
+    if hasarmor.Result then count = count + 1 end
+    if hasshield.Result then count = count + 1 end
+    if invalidWeapon.Result then count = count + 1 end
+
+    if count >= 2 then
+        return ConditionResult(false, {ConditionError("HasMultipleBladeSongIssues")})
+    end
+
+    if hasarmor.Result then
+        return ConditionResult(false, {ConditionError("HasNotBladesongArmor")})
+    end
+    
+    if invalidWeapon.Result then
+        return ConditionResult(false, {ConditionError("HasNotBladesongWeapon")})
+    end
+
+    return ~hasshield
+end
+
+function HasBladesongClimaxBlocked()
+    result = HasStatus('BLADESONG_ARMOR_MESSAGE') | HasStatus('BLADESONG_SHIELD_MESSAGE') | HasStatus('BLADESONG_UNARMED_MESSAGE') | HasStatus('BLADESONG_SHIELD')
+    return ConditionResult(result.Result, {ConditionError("BladesongClimaxNotBlocked")}, {ConditionError("BladesongClimaxBlocked")})
+end

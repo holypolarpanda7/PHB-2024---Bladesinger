@@ -1,0 +1,6 @@
+new entry "Projectile_Bladesong_Finisher"
+type "SpellData"
+using "Projectile_Bladesong_Finisher"
+data "SpellProperties" ""
+data "RequirementConditions" "false"
+data "Description" "hd7e8f90-1a2b-3c4d-5e6f-7080912a3b4d"

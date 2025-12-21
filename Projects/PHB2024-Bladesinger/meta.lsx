@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<save>
+    <version major="4" minor="8" revision="0" build="500"/>
+    <region id="MetaData">
+        <node id="root">
+            <attribute id="GameProject" type="LSString" value=""/>
+            <attribute id="Module" type="LSString" value="2eb0f48a-2f6d-05dc-8236-95b59e998637"/>
+            <attribute id="Name" type="LSString" value="PHB2024-Bladesinger"/>
+            <attribute id="UUID" type="LSString" value="e2a3e78d-b359-6f8d-372e-5a92f3f5ee56"/>
+            <attribute id="UpdatedDependencies" type="bool" value="true"/>
+            <children>
+                <node id="Categories"/>
+            </children>
+        </node>
+    </region>
+</save>
