@@ -73,14 +73,17 @@ jobs:
 
           Expand-Archive -Path $out -DestinationPath "lslib" -Force
 
-          # Divine CLI executable typically lives under lslib/Tools/Divine.exe
-          $divine = Join-Path (Resolve-Path "lslib").Path "Tools\Divine.exe"
-          if (-not (Test-Path $divine)) {
-            throw "Divine.exe not found at expected path: $divine. Inspect lslib folder structure."
+          # Find Divine.exe in the extracted folder
+          $divine = Get-ChildItem -Path "lslib" -Recurse -Filter "Divine.exe" | Select-Object -First 1
+          if (-not $divine) {
+            Write-Host "LSLib folder structure:"
+            Get-ChildItem -Path "lslib" -Recurse | Select-Object FullName
+            throw "Divine.exe not found in lslib folder. See structure above."
           }
 
-          "divine_path=$divine" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-          Write-Host "Divine path: $divine"
+          $divinePath = $divine.FullName
+          "divine_path=$divinePath" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "Divine path: $divinePath"
 
       - name: Sanity check mod source folder exists
         shell: pwsh
