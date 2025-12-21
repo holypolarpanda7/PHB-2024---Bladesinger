@@ -109,13 +109,13 @@ jobs:
           # -g bg3
           # -s <source folder>
           # -d <destination pak path>
-          # -l <compression level> (all = maximum compression)
+          # -c <compression method> (lz4, zlib, none)
           #
           # If your Divine build uses different flags, run:
           #   & $divine --help
           #   & $divine -a create-package --help
           #
-          & $divine -g ${env:GAME} -a create-package -s $src -d $pak -l all
+          & $divine -g ${env:GAME} -a create-package -s $src -d $pak -c lz4
 
           if (-not (Test-Path $pak)) { throw ".pak was not created: $pak" }
 
