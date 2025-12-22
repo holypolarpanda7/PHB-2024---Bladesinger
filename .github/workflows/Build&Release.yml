@@ -18,9 +18,9 @@ env:
   GAME: "bg3"
 
   # === LSLib / Divine CLI pin ===
-  LSLIB_VERSION: "1.19.5"
+  LSLIB_VERSION: "1.20.3"
 
-  # === Repo root is the mod source ===
+  # === Repo root is the mod source (we stage from here) ===
   MOD_SOURCE_DIR: "."
 
 jobs:
@@ -89,11 +89,35 @@ jobs:
           Write-Host "MOD_SOURCE_DIR: $src"
           Get-ChildItem -Path $src -Recurse | Select-Object -First 200 -ExpandProperty FullName
 
-      - name: Create .pak with Divine
+      # ✅ NEW: stage only mod-relevant folders (keeps .pak size consistent with local builds)
+      - name: Stage mod files for packaging
+        shell: pwsh
+        run: |
+          $stage = "pak_stage"
+          if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
+          New-Item -ItemType Directory -Force -Path $stage | Out-Null
+
+          foreach ($dir in @("Mods", "Public", "Localization")) {
+            if (Test-Path $dir) {
+              Write-Host "Including $dir/"
+              Copy-Item $dir "$stage\$dir" -Recurse -Force
+            } else {
+              Write-Host "Not found (skipping): $dir/"
+            }
+          }
+
+          if ((Get-ChildItem $stage | Measure-Object).Count -eq 0) {
+            throw "pak_stage is empty — nothing to package. Ensure Mods/ or Public/ exists at repo root."
+          }
+
+          Write-Host "Staged content (top-level):"
+          Get-ChildItem $stage | Select-Object Name, Mode, Length
+
+      - name: Create .pak with Divine (from staged content)
         shell: pwsh
         run: |
           $divine = "${{ steps.lslib.outputs.divine_path }}"
-          $src = (Resolve-Path "${env:MOD_SOURCE_DIR}").Path
+          $src = (Resolve-Path "pak_stage").Path
 
           New-Item -ItemType Directory -Force -Path "dist" | Out-Null
           $pak = Join-Path (Resolve-Path "dist").Path "${env:MOD_SLUG}.pak"
