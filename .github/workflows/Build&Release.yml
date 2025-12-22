@@ -18,7 +18,7 @@ env:
   GAME: "bg3"
 
   # === LSLib / Divine CLI pin ===
-  LSLIB_VERSION: "1.20.3"
+  LSLIB_VERSION: "1.18.7"  # Stable version - avoids v18 package format issues
 
   # === Repo root is the mod source (we stage from here) ===
   MOD_SOURCE_DIR: "."
