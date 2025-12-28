@@ -1,3 +1,7 @@
+// Ignore common system files
 Crashlogs
 temp_extract
 LocalDev.md
+
+// Ignore Editor directories
+Editor/
