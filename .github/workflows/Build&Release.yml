@@ -225,15 +225,18 @@ jobs:
       #     changelog: "Automated release ${{ github.ref_name }}"
 
       # ----------------------------
-      # Nexus publish (WIP)
+      # Nexus publish (manual - cookie expires)
       # ----------------------------
       # - name: Upload to Nexus Mods
-      #   uses: hmlendea/nexusmods-update@v2
+      #   uses: BUTR/nexusmods-upload@v1
       #   with:
-      #     api_key: ${{ secrets.NEXUS_API_KEY }}
-      #     game_domain: ${{ secrets.NEXUS_GAME_DOMAIN }}
+      #     game_domain: baldursgate3
       #     mod_id: ${{ secrets.NEXUS_MOD_ID }}
       #     file_path: dist/${{ needs.build.outputs.zip_name }}
       #     file_name: "${{ env.MOD_NAME }} ${{ github.ref_name }}"
-      #     file_version: ${{ github.ref_name }}
-      #     changelog: "Automated release ${{ github.ref_name }}"
+      #     version: ${{ needs.build.outputs.version }}
+      #     changelog: "Release ${{ github.ref_name }}"
+      #     category: Main
+      #   env:
+      #     NEXUSMODS_APIKEY: ${{ secrets.NEXUSMODS_APIKEY }}
+      #     NEXUSMODS_SESSION_COOKIE: ${{ secrets.NEXUSMODS_SESSION_COOKIE }}

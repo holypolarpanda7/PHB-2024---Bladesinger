@@ -4,7 +4,8 @@ function BladesongAvaliable()
         return ~hasbladesong
     end
 
-    local hasarmor = HasHeavyArmor(context.Source) | HasMediumArmor(context.Source)
+    -- PHB 2024: All armor blocks Bladesong
+    local hasarmor = WearingArmor(context.Source)
     local hasshield = HasShieldEquipped(context.Source)
     
     -- PHB 2024: Blacklist approach - block two-handed non-versatile melee weapons

@@ -82,9 +82,8 @@ data "StatusType" "INVISIBLE"
 new entry "BLADESONG"
 type "StatusData"
 using "BLADESONG"
-data "Passives" "Bladesong_Boost;Bladesong_Unlock;Bladesong_Healing;Bladesong_Damage;Bladesong_Equipment_Monitor"
 data "OnApplyFunctors" "ApplyEquipmentStatus(MeleeMainHand,BLADEWORK_CUSTOM,100,10);ApplyEquipmentStatus(MeleeOffHand,BLADEWORK_CUSTOM,100,10);ApplyEquipmentStatus(RangedMainHand,BLADEWORK_CUSTOM,100,10);ApplyStatus(SELF,BLADESONG_WEAPON_WATCHER,100,-1)"
-data "OnRemoveFunctors" "ApplyEquipmentStatus(MeleeMainHand,BLADEWORK_REMOVE_CUSTOM,100,1);ApplyEquipmentStatus(MeleeOffHand,BLADEWORK_REMOVE_CUSTOM,100,1);ApplyEquipmentStatus(RangedMainHand,BLADEWORK_REMOVE_CUSTOM,100,1);ApplyEquipmentStatus(RangedOffHand,BLADEWORK_REMOVE_CUSTOM,100,1)"
+data "OnRemoveFunctors" "RemoveStatus(SELF,BLADESONG_WEAPON_WATCHER);ApplyEquipmentStatus(MeleeMainHand,BLADEWORK_REMOVE_CUSTOM,100,1);ApplyEquipmentStatus(MeleeOffHand,BLADEWORK_REMOVE_CUSTOM,100,1);ApplyEquipmentStatus(RangedMainHand,BLADEWORK_REMOVE_CUSTOM,100,1);ApplyEquipmentStatus(RangedOffHand,BLADEWORK_REMOVE_CUSTOM,100,1)"
 
 new entry "BLADESONG_WEAPON_WATCHER"
 type "StatusData"
@@ -112,3 +111,11 @@ data "StackPriority" "9"
 data "StatusEffect" ""
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
 
+// Technical status that consumes lowest available spell slot (levels 1-3)
+// Uses reverse priority: check highest first with "not has higher" conditions
+new entry "BLADESONG_CLIMAX_SLOT_CONSUME"
+type "StatusData"
+data "StatusType" "BOOST"
+data "StackId" "BLADESONG_CLIMAX_SLOT_CONSUME"
+data "OnApplyFunctors" "IF(HasActionResource('SpellSlot',1,1,false,false,context.Target)):UseActionResource(TARGET,SpellSlot,1,1);IF(not HasActionResource('SpellSlot',1,1,false,false,context.Target) and HasActionResource('SpellSlot',1,2,false,false,context.Target)):UseActionResource(TARGET,SpellSlot,1,2);IF(not HasActionResource('SpellSlot',1,1,false,false,context.Target) and not HasActionResource('SpellSlot',1,2,false,false,context.Target) and HasActionResource('SpellSlot',1,3,false,false,context.Target)):UseActionResource(TARGET,SpellSlot,1,3);RemoveStatus(SELF,BLADESONG_CLIMAX_SLOT_CONSUME)"
+data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;ApplyToDead;IgnoreResting"
