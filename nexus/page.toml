@@ -1,10 +1,10 @@
 # Nexus Mods page for this mod - applied by `python -m bg3data.nexus_web push <layer>` (dry run without --apply).
 # Pulled from the live page 2026-10-07 13:34. The full description is description.bbcode (BBCode).
 
-name = "Bladesinger"
+name = "Bladesinger (retired - use DnD 5.5e All-in-One BEYOND)"
 version = "1.2.0"
 author = "holypolarpanda"
-summary = "Extension mod for \"DnD 5.5e All-in-One BEYOND\" that updates the Bladesinger wizard subclass to match the **Heroes of Faerun** (2024 PHB) rules. Requires: https://www.nexusmods.com/baldursgate3/mods/12727 Authored by: yoonmoonsick"
+summary = "Retired. DnD 5.5e All-in-One BEYOND now includes the Heroes of Faerun Bladesinger - use it for Bladesinger and for updates: https://www.nexusmods.com/baldursgate3/mods/12727"
 
 [requirements]
 method = "legacy"
