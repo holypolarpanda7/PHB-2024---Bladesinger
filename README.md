@@ -277,8 +277,8 @@ If you want to pack the mod yourself using LSLib's Divine tool:
 
 ```bash
 divine.exe -g bg3 -a create-package \
-  -s "d:/BG3Modding/Projects/PHB-2024---Bladesinger" \
-  -d "d:/vortex/BG3/mods/PHB2024-Bladesinger_2eb0f48a-2f6d-05dc-8236-95b59e998637/PHB2024-Bladesinger_2eb0f48a-2f6d-05dc-8236-95b59e998637.pak"
+  -s "d:/BG3Modding/Projects/dnd55e-Bladesinger" \
+  -d "d:/vortex/BG3/mods/Bladesinger_2eb0f48a-2f6d-05dc-8236-95b59e998637/Bladesinger_2eb0f48a-2f6d-05dc-8236-95b59e998637.pak"
 ```
 
 **Important**: When using Vortex Mod Manager, the pak file must be created at the path with the UUID in the folder name that Vortex's symlink points to.
