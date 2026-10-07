@@ -40,5 +40,5 @@ target = "A"
 real_rolls = true
 spawn = [{ as = "A", template = "wolf", faction = "hostile", hp = 300, distance = 4 }]
 setup = [{ target = "host", status = "BLADESONG", turns = 10 }, { target = "host", boost = "ActionResource(SpellSlot,1,1)" }, { target = "A", boost = "AbilityFailedSavingThrow(Intelligence)" }]
-expect = [{ target = "A", damage_type = "Force" }, { target = "host", status_removed = ["BLADESONG"] }, { resource = "SpellSlot", level = 1, amount_change = -1 }]
-notes = "The Climax is a jump to a point next to the target; the slot is spent by the mod's GROUND: UseActionResource functors."
+expect = [{ target = "A", damage_type = "Force" }, { target = "host", status_removed = ["BLADESONG"] }, { target = "host", status_applied = ["BLADESONGFINISHER_ALLY"] }, { resource = "SpellSlot", level = 1, amount_change = -1 }]
+notes = "The Climax is a jump to a point next to the target; the slot is spent by the mod's GROUND: UseActionResource functors. The blast's ally effects (heal + BLADESONGFINISHER_ALLY) land on the Bladesinger too - proof the un-prefixed functors run."
