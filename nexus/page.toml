@@ -1,0 +1,14 @@
+# Nexus Mods page for this mod - applied by `python -m bg3data.nexus_web push <layer>` (dry run without --apply).
+# Pulled from the live page 2026-10-07 13:34. The full description is description.bbcode (BBCode).
+
+name = "Bladesinger"
+version = "v1.1.0"
+author = "holypolarpanda"
+summary = "Extension mod for \"DnD 5.5e All-in-One BEYOND\" that updates the Bladesinger wizard subclass to match the **Heroes of Faerun** (2024 PHB) rules. Requires: https://www.nexusmods.com/baldursgate3/mods/12727 Authored by: yoonmoonsick"
+
+[requirements]
+method = "legacy"
+
+[[requirements.nexus]]
+name = "DnD PHB 2024 All in One - Artificer Psion Gunslinger"
+note = "This mod is built as an extension of work done by yoonmoonsick"
