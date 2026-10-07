@@ -1,3 +1,5 @@
+> **This mod is retired.** [DnD 5.5e All-in-One BEYOND](https://www.nexusmods.com/baldursgate3/mods/12727) now includes the Heroes of Faerun Bladesinger and is the go-to option for the Bladesinger and for all future updates. Thanks to everyone who used this mod.
+
 # Bladesinger (Heroes of Faerun)
 
 Extension mod for "DnD 5.5e All-in-One BEYOND" that updates the Bladesinger wizard subclass to match the **Heroes of Faerun** (2024 PHB) rules.
