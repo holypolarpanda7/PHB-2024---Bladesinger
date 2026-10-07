@@ -1,6 +1,6 @@
-# PHB 2024 - Bladesinger (Heroes of Faerun)
+# Bladesinger (Heroes of Faerun)
 
-Extension mod for "DnD PHB 2024 All in One" that updates the Bladesinger wizard subclass to match the **Heroes of Faerun** (2024 PHB) rules.
+Extension mod for "DnD 5.5e All-in-One BEYOND" that updates the Bladesinger wizard subclass to match the **Heroes of Faerun** (2024 PHB) rules.
 
 ## Features
 
@@ -41,14 +41,14 @@ This mod overrides the Bladesinger subclass to accurately reflect the 2024 D&D P
 
 ## How This Mod Works
 
-This mod extends "DnD PHB 2024 All in One" by selectively overriding files to adjust Bladesinger mechanics.
+This mod extends "DnD 5.5e All-in-One BEYOND" by selectively overriding files to adjust Bladesinger mechanics.
 
 ### Technical Implementation
 
 #### 1. Condition Script Override (Weapon Restrictions)
 **File**: `Scripts/thoth/helpers/BladesongAvailable.khn`
 
-Replaces PHB 2024's weapon whitelist with a **blacklist approach** that blocks two-handed non-versatile weapons. This allows **ALL** one-handed weapons (including modded weapons), versatile weapons, and ranged weapons.
+Replaces DnD 5.5e All-in-One BEYOND's weapon whitelist with a **blacklist approach** that blocks two-handed non-versatile weapons. This allows **ALL** one-handed weapons (including modded weapons), versatile weapons, and ranged weapons.
 
 ```lua
 function BladesongAvaliable()
@@ -79,7 +79,7 @@ end
 #### 2. INT-Based Weapon Bonuses (Equipment Status System)
 **Files**: `Status_BOOST.txt` and `Passive.txt`
 
-PHB 2024 base mod grants Intelligence-based weapon attack/damage bonuses through **equipment statuses**, which are applied to specific weapon items. This system requires special handling to persist through weapon swaps.
+The DnD 5.5e All-in-One BEYOND base mod grants Intelligence-based weapon attack/damage bonuses through **equipment statuses**, which are applied to specific weapon items. This system requires special handling to persist through weapon swaps.
 
 **BLADESONG Status** - Applies equipment statuses when activated:
 ```
@@ -177,15 +177,15 @@ Ensures martial weapon proficiency is granted at level 3:
 <attribute id="Boosts" type="LSString" value="Proficiency(MartialWeapons)"/>
 ```
 
-This progression override also removes the passives that apply the "Bladesong Impeded" status indicators from the base game/PHB 2024 mod.
+This progression override also removes the passives that apply the "Bladesong Impeded" status indicators from the base game/DnD 5.5e All-in-One BEYOND.
 
 ### Why Script Override is Required
 
-The weapon restrictions in PHB 2024 are implemented via condition scripts that check specific weapon types (dagger, longsword, rapier, etc.). Simply removing passives or changing progressions doesn't work because:
+The weapon restrictions in DnD 5.5e All-in-One BEYOND are implemented via condition scripts that check specific weapon types (dagger, longsword, rapier, etc.). Simply removing passives or changing progressions doesn't work because:
 
-1. PHB 2024's condition script still runs and blocks non-approved weapons
+1. DnD 5.5e All-in-One BEYOND's condition script still runs and blocks non-approved weapons
 2. Khonsu scripts can override by matching the exact function name and path
-3. Our `BladesongAvailable.khn` completely replaces PHB 2024's implementation
+3. Our `BladesongAvailable.khn` completely replaces DnD 5.5e All-in-One BEYOND's implementation
 
 ### Development Notes
 
@@ -210,7 +210,7 @@ The weapon restrictions in PHB 2024 are implemented via condition scripts that c
 
 ### Requirements
 - **Baldur's Gate 3** (latest version)
-- **DnD PHB 2024 All in One** mod (REQUIRED DEPENDENCY)
+- **DnD 5.5e All-in-One BEYOND** mod (REQUIRED DEPENDENCY)
 - **BG3 Mod Manager** or **Vortex Mod Manager**
 
 ### Steps
@@ -219,7 +219,7 @@ The weapon restrictions in PHB 2024 are implemented via condition scripts that c
 2. Install using your mod manager:
    - **BG3 Mod Manager:** Drag and drop the `.pak` file
    - **Vortex:** Install from archive
-3. Ensure load order: This mod must load **AFTER** "DnD PHB 2024 All in One"
+3. Ensure load order: This mod must load **AFTER** "DnD 5.5e All-in-One BEYOND"
 4. Enable the mod and launch the game
 
 ### Manual Installation
@@ -227,9 +227,9 @@ The weapon restrictions in PHB 2024 are implemented via condition scripts that c
 2. Copy the `.pak` file to: `%LOCALAPPDATA%\Larian Studios\Baldur's Gate 3\Mods\`
 3. Edit `modsettings.lsx` to include this mod's UUID with the proper load order
 
-## What's Changed from PHB 2024 Mod
+## What's Changed from DnD 5.5e All-in-One BEYOND
 
-The "DnD PHB 2024 All in One" mod already implements most of the Bladesinger correctly. This extension makes these specific adjustments:
+The "DnD 5.5e All-in-One BEYOND" mod already implements most of the Bladesinger correctly. This extension makes these specific adjustments:
 
 1. **Weapon Restrictions Changed**: Switched from whitelist (daggers, longswords, rapiers) to blacklist (blocks two-handed non-versatile)
 2. **Modded Weapon Support**: Blacklist approach means any weapon without two-handed tag works
@@ -256,7 +256,7 @@ None currently known. All weapon restrictions work correctly, INT bonuses persis
 
 ### Game Crashes on Startup
 - **Cause**: Mod conflicts or load order issues
-- **Fix**: Ensure this mod loads AFTER "DnD PHB 2024 All in One"
+- **Fix**: Ensure this mod loads AFTER "DnD 5.5e All-in-One BEYOND"
 
 ### Bladesong Doesn't Activate
 - Check that you're not wearing medium/heavy armor or a shield
@@ -267,7 +267,7 @@ None currently known. All weapon restrictions work correctly, INT bonuses persis
 - Try re-equipping your weapon if bonuses don't appear immediately
 
 ### Mod Doesn't Load
-- Verify load order: This mod MUST load after "DnD PHB 2024 All in One"
+- Verify load order: This mod MUST load after "DnD 5.5e All-in-One BEYOND"
 - Check modsettings.lsx includes this mod's UUID
 - Ensure pak file is properly deployed to mod folder
 

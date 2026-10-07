@@ -10,10 +10,10 @@ permissions:
 
 env:
   # === Display name (human-readable) ===
-  MOD_NAME: "PHB 2024 - Bladesinger"
+  MOD_NAME: "Bladesinger"
 
   # === Safe slug for filenames ===
-  MOD_SLUG: "PHB_2024_Bladesinger"
+  MOD_SLUG: "Bladesinger"
 
   GAME: "bg3"
 

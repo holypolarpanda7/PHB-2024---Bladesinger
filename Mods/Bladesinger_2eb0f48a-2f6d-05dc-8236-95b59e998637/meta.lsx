@@ -124,13 +124,13 @@
                 <node id="ModuleInfo">
                     <attribute id="Author" type="LSString" value=""/>
                     <attribute id="CharacterCreationLevelName" type="FixedString" value=""/>
-                    <attribute id="Description" type="LSString" value="Bladesinger on top of PHB 2024"/>
+                    <attribute id="Description" type="LSString" value="Bladesinger (Heroes of Faerun) on top of DnD 5.5e All-in-One BEYOND"/>
                     <attribute id="FileSize" type="uint64" value="0"/>
-                    <attribute id="Folder" type="LSString" value="PHB2024-Bladesinger_2eb0f48a-2f6d-05dc-8236-95b59e998637"/>
+                    <attribute id="Folder" type="LSString" value="Bladesinger_2eb0f48a-2f6d-05dc-8236-95b59e998637"/>
                     <attribute id="LobbyLevelName" type="FixedString" value=""/>
                     <attribute id="MD5" type="LSString" value="8f8bd30f24095f3906a46dae04b78912"/>
                     <attribute id="MenuLevelName" type="FixedString" value=""/>
-                    <attribute id="Name" type="LSString" value="PHB2024-Bladesinger"/>
+                    <attribute id="Name" type="LSString" value="Bladesinger"/>
                     <attribute id="NumPlayers" type="uint8" value="4"/>
                     <attribute id="PhotoBooth" type="FixedString" value=""/>
                     <attribute id="PublishHandle" type="uint64" value="5626318"/>
