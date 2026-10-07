@@ -1,9 +1,8 @@
 name: Build & Release BG3 Mod
 
 on:
-  push:
-    tags:
-      - "v*.*.*"   # e.g. v1.2.3
+  # manual only (2026-10-07): releases are made locally - bg3-data-mcp gate -> release prepare/package/publish
+  workflow_dispatch:
 
 permissions:
   contents: write
