@@ -2,7 +2,7 @@
 # Pulled from the live page 2026-10-07 13:34. The full description is description.bbcode (BBCode).
 
 name = "Bladesinger"
-version = "v1.1.0"
+version = "1.2.0"
 author = "holypolarpanda"
 summary = "Extension mod for \"DnD 5.5e All-in-One BEYOND\" that updates the Bladesinger wizard subclass to match the **Heroes of Faerun** (2024 PHB) rules. Requires: https://www.nexusmods.com/baldursgate3/mods/12727 Authored by: yoonmoonsick"
 
