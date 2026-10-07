@@ -1,0 +1,44 @@
+# Bladesinger (Heroes of Faerun) - in-game tests (bg3-data-mcp harness, 2026-10-07).
+# Run one case: bg3_test_run("bladesinger", "<id>"); the whole suite runs inside the build below through the gate:
+#   python -m bg3data.gate run bladesinger
+# The build checks every level-up 3-12 against the data (the mod's subclass node: martial weapons, Training in War
+# and Song); the cases check Bladesong and the Climax. Equipment rules (two-handed weapons, armor, shields) need an
+# "is it castable" check the harness doesn't have yet.
+
+[suite]
+name = "Bladesinger"
+class = "Wizard"
+mode = "script"
+
+[[build]]
+id = "wiz-base"
+title = "Wizard base, levels 1-2 (start save)"
+levels = [1, 2]
+save_as = "Tavizard L2 base"
+
+[[build]]
+id = "bladesinger-wizard"
+title = "Wizard - Bladesinger, levels 3-12 with the mod loaded"
+subclass = "BladesingingSchool"
+from = "wiz-base"
+levels = [3, 12]
+
+[[case]]
+id = "bs-bladesong"
+build = "bladesinger-wizard"
+title = "Bladesong starts (Bonus Action) and empowers the wielded weapons"
+spell = "Shout_Bladesong"
+target = "host"
+expect = [{ target = "host", status_applied = ["BLADESONG"] }]
+
+[[case]]
+id = "bs-climax"
+build = "bladesinger-wizard"
+title = "Bladesong Climax: force damage on a failed Intelligence save, costs a 1st-level slot, ends Bladesong"
+spell = "Projectile_Bladesong_Finisher"
+target = "A"
+real_rolls = true
+spawn = [{ as = "A", template = "wolf", faction = "hostile", hp = 300, distance = 4 }]
+setup = [{ target = "host", status = "BLADESONG", turns = 10 }, { target = "host", boost = "ActionResource(SpellSlot,1,1)" }, { target = "A", boost = "AbilityFailedSavingThrow(Intelligence)" }]
+expect = [{ target = "A", damage_type = "Force" }, { target = "host", status_removed = ["BLADESONG"] }, { resource = "SpellSlot", level = 1, amount_change = -1 }]
+notes = "The Climax is a jump to a point next to the target; the slot is spent by the mod's GROUND: UseActionResource functors."
