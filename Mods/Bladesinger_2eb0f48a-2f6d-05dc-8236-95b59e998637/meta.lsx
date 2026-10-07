@@ -9,7 +9,7 @@
                     <children>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="DiceSet_01"/>
-                            <attribute id="MD5" type="LSString" value=""/>
+                            <attribute id="MD5" type="LSString" value="8edd9729dcdbcafdbba0770834bdd323"/>
                             <attribute id="Name" type="LSString" value="DiceSet_01"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="e842840a-2449-588c-b0c4-22122cfce31b"/>
@@ -17,7 +17,7 @@
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="DiceSet_02"/>
-                            <attribute id="MD5" type="LSString" value=""/>
+                            <attribute id="MD5" type="LSString" value="9c98eaefccfb3f7cfd6870ff4e84a50d"/>
                             <attribute id="Name" type="LSString" value="DiceSet_02"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="b176a0ac-d79f-ed9d-5a87-5c2c80874e10"/>
@@ -25,7 +25,7 @@
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="DiceSet_03"/>
-                            <attribute id="MD5" type="LSString" value=""/>
+                            <attribute id="MD5" type="LSString" value="e800e59821eb3090e7e5f25cc478dbd3"/>
                             <attribute id="Name" type="LSString" value="DiceSet_03"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="e0a4d990-7b9b-8fa9-d7c6-04017c6cf5b1"/>
@@ -33,7 +33,7 @@
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="DiceSet_06"/>
-                            <attribute id="MD5" type="LSString" value=""/>
+                            <attribute id="MD5" type="LSString" value="4a53b4f61b1667007e21c661309b7435"/>
                             <attribute id="Name" type="LSString" value="DiceSet_06"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="ee4989eb-aab8-968f-8674-812ea2f4bfd7"/>
@@ -41,7 +41,7 @@
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="MainUI"/>
-                            <attribute id="MD5" type="LSString" value=""/>
+                            <attribute id="MD5" type="LSString" value="d41d8cd98f00b204e9800998ecf8427e"/>
                             <attribute id="Name" type="LSString" value="MainUI"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="630daa32-70f8-3da5-41b9-154fe8410236"/>
@@ -65,7 +65,7 @@
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="CrossplayUI"/>
-                            <attribute id="MD5" type="LSString" value=""/>
+                            <attribute id="MD5" type="LSString" value="d41d8cd98f00b204e9800998ecf8427e"/>
                             <attribute id="Name" type="LSString" value="CrossplayUI"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="e1ce736b-52e6-e713-e9e7-e6abbb15a198"/>
@@ -73,7 +73,7 @@
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="Gustav"/>
-                            <attribute id="MD5" type="LSString" value="066354a64ec5ea5ee70b475f14b510ea"/>
+                            <attribute id="MD5" type="LSString" value="49388ba97ebb59bc4746bd33aa5538cc"/>
                             <attribute id="Name" type="LSString" value="Gustav"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="991c9c7a-fb80-40cb-8f0d-b92d4e80e9b1"/>
@@ -81,11 +81,11 @@
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="GustavDev"/>
-                            <attribute id="MD5" type="LSString" value="e60af947c16ab73cc7a0aab9eaa4fe1a"/>
+                            <attribute id="MD5" type="LSString" value="8d5c1594b20c2cd0600ea84efb1ad916"/>
                             <attribute id="Name" type="LSString" value="GustavDev"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="28ac9ce2-2aba-8cda-b3b5-6e922f71b6b8"/>
-                            <attribute id="Version64" type="int64" value="145241946983074840"/>
+                            <attribute id="Version64" type="int64" value="145242591228395316"/>
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="GustavX"/>
@@ -93,7 +93,7 @@
                             <attribute id="Name" type="LSString" value="GustavX"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="cb555efe-2d9e-131f-8195-a89329d218ea"/>
-                            <attribute id="Version64" type="int64" value="145241946983074840"/>
+                            <attribute id="Version64" type="int64" value="145241946983300916"/>
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="Honour"/>
@@ -101,7 +101,7 @@
                             <attribute id="Name" type="LSString" value="Honour"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="b77b6210-ac50-4cb1-a3d5-5702fb9c744c"/>
-                            <attribute id="Version64" type="int64" value="36028797025881112"/>
+                            <attribute id="Version64" type="int64" value="36028797026107188"/>
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="HonourX"/>
@@ -109,15 +109,15 @@
                             <attribute id="Name" type="LSString" value="HonourX"/>
                             <attribute id="PublishHandle" type="uint64" value="0"/>
                             <attribute id="UUID" type="guid" value="767d0062-d82c-279c-e16b-dfee7fe94cdd"/>
-                            <attribute id="Version64" type="int64" value="36028797025881112"/>
+                            <attribute id="Version64" type="int64" value="36028797026107188"/>
                         </node>
                         <node id="ModuleShortDesc">
                             <attribute id="Folder" type="LSString" value="DnD2024_897914ef-5c96-053c-44af-0be823f895fe"/>
-                            <attribute id="MD5" type="LSString" value="183a2c25b2456360fdd8f1d6931f1dc2"/>
-                            <attribute id="Name" type="LSString" value="DnD PHB 2024 All in One"/>
+                            <attribute id="MD5" type="LSString" value="d4cb6345dcfaf9d20eccab3631645ff0"/>
+                            <attribute id="Name" type="LSString" value="DnD 5.5e All-in-One BEYOND"/>
                             <attribute id="PublishHandle" type="uint64" value="4419649"/>
                             <attribute id="UUID" type="guid" value="897914ef-5c96-053c-44af-0be823f895fe"/>
-                            <attribute id="Version64" type="int64" value="73887194271449089"/>
+                            <attribute id="Version64" type="int64" value="145804076590825475"/>
                         </node>
                     </children>
                 </node>
@@ -125,10 +125,10 @@
                     <attribute id="Author" type="LSString" value=""/>
                     <attribute id="CharacterCreationLevelName" type="FixedString" value=""/>
                     <attribute id="Description" type="LSString" value="Bladesinger (Heroes of Faerun) on top of DnD 5.5e All-in-One BEYOND"/>
-                    <attribute id="FileSize" type="uint64" value="0"/>
+                    <attribute id="FileSize" type="uint64" value="537039"/>
                     <attribute id="Folder" type="LSString" value="Bladesinger_2eb0f48a-2f6d-05dc-8236-95b59e998637"/>
                     <attribute id="LobbyLevelName" type="FixedString" value=""/>
-                    <attribute id="MD5" type="LSString" value="8f8bd30f24095f3906a46dae04b78912"/>
+                    <attribute id="MD5" type="LSString" value="bbc6b75bbf63741ddd16cba1ea79d9ae"/>
                     <attribute id="MenuLevelName" type="FixedString" value=""/>
                     <attribute id="Name" type="LSString" value="Bladesinger"/>
                     <attribute id="NumPlayers" type="uint8" value="4"/>
@@ -136,7 +136,7 @@
                     <attribute id="PublishHandle" type="uint64" value="5626318"/>
                     <attribute id="StartupLevelName" type="FixedString" value=""/>
                     <attribute id="UUID" type="FixedString" value="2eb0f48a-2f6d-05dc-8236-95b59e998637"/>
-                    <attribute id="Version64" type="int64" value="36310271995674624"/>
+                    <attribute id="Version64" type="int64" value="36310271995674626"/>
                     <children>
                         <node id="PublishVersion">
                             <attribute id="Version64" type="int64" value="144255927718626661"/>
